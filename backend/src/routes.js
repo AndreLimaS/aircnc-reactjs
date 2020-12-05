@@ -14,5 +14,5 @@ routes.post("/spots", upload.single("thumbnail"), SpotController.store);
 routes.get("/spots", SpotController.index);
 routes.get("/dashboard", DashboardController.show);
 
-routes.post("/spots/:spot:id/bookings", BookingController.store);
+routes.post("/spots/:id/bookings", BookingController.store);
 module.exports = routes;
