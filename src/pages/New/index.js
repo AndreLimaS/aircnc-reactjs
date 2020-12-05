@@ -1,9 +1,9 @@
 import React from "react";
-
+import api from "../../services/api";
 import camera from "../../assets/camera.svg";
 import "./styles.css";
 
-function New() {
+function New({ history }) {
   const [thumbnail, setThumbnail] = React.useState(null);
   const [company, setCompany] = React.useState("");
   const [techs, setTechs] = React.useState("");
@@ -13,7 +13,24 @@ function New() {
     return thumbnail ? URL.createObjectURL(thumbnail) : null;
   }, [thumbnail]);
 
-  function handleSubmit() {}
+  //Method post
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData();
+    const user_id = localStorage.getItem("user");
+
+    data.append("thumbnail", thumbnail);
+    data.append("company", company);
+    data.append("techs", techs);
+    data.append("price", price);
+
+    await api.post("/spots", data, {
+      headers: { user_id },
+    });
+
+    history.push("/dashboard");
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <label
